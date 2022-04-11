@@ -7,15 +7,9 @@ import (
 func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName(".env")
-	viper.SetConfigType("env")
 
-	viper.AutomaticEnv()
-
-	err = viper.ReadInConfig()
-	if err != nil {
-		// log.Panic(err)
-		return
-	}
+	viper.BindEnv("PUSHOVER_API_KEY")
+	viper.BindEnv("PUSHOVER_USER_KEY")
 
 	err = viper.Unmarshal(&config)
 	return
