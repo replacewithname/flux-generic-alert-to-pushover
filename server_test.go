@@ -5,6 +5,7 @@ import (
 	"flux-generic-alert-to-pushover/handler"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gregdel/pushover"
@@ -17,7 +18,8 @@ func TestHappyPath(t *testing.T) {
 
 	// Setup
 	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/send-generic-to-pushover", nil)
+	body := `{"message"="This is my message", "reason"="This is my reason"}`
+	req := httptest.NewRequest(http.MethodPost, "/send-generic-to-pushover", strings.NewReader(body))
 	// req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	context := e.NewContext(req, rec)
